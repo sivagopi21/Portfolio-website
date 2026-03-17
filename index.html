@@ -1,0 +1,675 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sivagopi — Graphic Designer & AI Creative</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --pink:#ff2d78;--purple:#9b5de5;--cyan:#00d4ff;--gold:#ffbe0b;--green:#06d6a0;--orange:#ff6b35;
+  --dark:#060610;--d2:#0c0c1e;--d3:#12122a;--d4:#181836;
+  --text:#f0eeff;--muted:#7a7a9d;--border:rgba(255,255,255,0.07);
+  --g1:linear-gradient(135deg,#ff2d78,#9b5de5);
+  --g2:linear-gradient(135deg,#00d4ff,#9b5de5);
+  --g3:linear-gradient(135deg,#ffbe0b,#ff6b35);
+  --g4:linear-gradient(135deg,#06d6a0,#00d4ff);
+}
+html{scroll-behavior:smooth;}
+body{font-family:'Inter',sans-serif;background:var(--dark);color:var(--text);overflow-x:hidden;cursor:none;}
+
+/* CURSOR */
+#dot{width:8px;height:8px;background:var(--pink);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9999;}
+#ring{width:32px;height:32px;border:1px solid rgba(255,45,120,0.6);border-radius:50%;position:fixed;top:0;left:0;pointer-events:none;z-index:9998;}
+
+/* NAV */
+nav{
+  position:fixed;top:0;left:0;right:0;z-index:500;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 6%;height:68px;
+  background:rgba(6,6,16,0.9);
+  border-bottom:1px solid var(--border);
+  backdrop-filter:blur(24px);
+}
+.nlogo{font-family:'Syne',sans-serif;font-weight:800;font-size:1.05rem;text-decoration:none;background:var(--g1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.nlinks{display:flex;gap:2rem;list-style:none;align-items:center;}
+.nlinks a{font-size:0.78rem;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;color:var(--muted);text-decoration:none;transition:color 0.2s;}
+.nlinks a:hover{color:var(--text);}
+.ncta{background:var(--g1) !important;-webkit-background-clip:initial !important;-webkit-text-fill-color:white !important;color:white !important;padding:0.5rem 1.4rem;border-radius:2rem;transition:opacity 0.2s !important;}
+.ncta:hover{opacity:0.8 !important;}
+
+/* ═══════════════ HERO ═══════════════ */
+.hero{
+  min-height:100vh;display:flex;align-items:center;
+  padding:0 6%;padding-top:68px;
+  position:relative;overflow:hidden;
+}
+/* animated gradient orbs */
+.orb{position:absolute;border-radius:50%;filter:blur(80px);pointer-events:none;animation:orbFloat 8s ease-in-out infinite;}
+.orb1{width:500px;height:500px;background:rgba(155,93,229,0.2);top:-10%;right:-5%;animation-delay:0s;}
+.orb2{width:400px;height:400px;background:rgba(255,45,120,0.15);bottom:-10%;left:-5%;animation-delay:-3s;}
+.orb3{width:300px;height:300px;background:rgba(0,212,255,0.1);top:40%;right:25%;animation-delay:-6s;}
+@keyframes orbFloat{0%,100%{transform:translateY(0) scale(1);}50%{transform:translateY(-30px) scale(1.05);}}
+
+/* grid bg */
+.hero::before{
+  content:'';position:absolute;inset:0;pointer-events:none;
+  background-image:linear-gradient(rgba(255,255,255,0.02) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,0.02) 1px,transparent 1px);
+  background-size:80px 80px;
+  mask-image:radial-gradient(ellipse 80% 80% at 50% 50%,black 30%,transparent 100%);
+}
+
+.hero-inner{position:relative;z-index:2;max-width:780px;}
+.hero-eyebrow{
+  display:inline-flex;align-items:center;gap:0.6rem;
+  background:rgba(255,45,120,0.1);border:1px solid rgba(255,45,120,0.25);
+  color:var(--pink);font-size:0.72rem;font-weight:600;letter-spacing:0.12em;
+  text-transform:uppercase;padding:0.4rem 1rem;border-radius:2rem;margin-bottom:2rem;
+}
+.pulse{width:6px;height:6px;border-radius:50%;background:var(--pink);animation:pulseAnim 1.6s infinite;}
+@keyframes pulseAnim{0%,100%{opacity:1;transform:scale(1);}50%{opacity:0.4;transform:scale(1.5);}}
+
+.hero-h1{
+  font-family:'Syne',sans-serif;font-weight:800;
+  font-size:clamp(3.2rem,6vw,6rem);
+  line-height:0.95;letter-spacing:-0.04em;color:white;
+  margin-bottom:1.8rem;
+}
+.hero-h1 .line-grad{display:block;background:var(--g1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.hero-h1 .line-grad2{display:block;background:var(--g3);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+
+.hero-p{font-size:1.05rem;line-height:1.8;color:var(--muted);max-width:520px;margin-bottom:2.5rem;}
+.hero-p b{color:var(--text);}
+
+.hero-ctas{display:flex;gap:1rem;flex-wrap:wrap;margin-bottom:4rem;}
+.btn-g{background:var(--g1);color:white;padding:0.9rem 2.2rem;border-radius:3rem;font-size:0.9rem;font-weight:600;text-decoration:none;box-shadow:0 4px 30px rgba(255,45,120,0.35);transition:all 0.3s;display:inline-flex;align-items:center;gap:0.5rem;}
+.btn-g:hover{transform:translateY(-3px);box-shadow:0 8px 40px rgba(255,45,120,0.5);}
+.btn-o{border:1px solid rgba(255,255,255,0.15);color:var(--text);padding:0.9rem 2.2rem;border-radius:3rem;font-size:0.9rem;font-weight:500;text-decoration:none;background:rgba(255,255,255,0.04);transition:all 0.3s;display:inline-flex;align-items:center;gap:0.5rem;}
+.btn-o:hover{border-color:rgba(255,255,255,0.35);background:rgba(255,255,255,0.08);transform:translateY(-3px);}
+
+.hero-stats{display:flex;gap:3rem;}
+.hstat-n{font-family:'Syne',sans-serif;font-weight:800;font-size:2.4rem;line-height:1;background:var(--g1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.hstat-l{font-size:0.72rem;color:var(--muted);margin-top:0.3rem;letter-spacing:0.06em;text-transform:uppercase;}
+
+/* floating chips on hero right */
+.hero-chips{
+  position:absolute;right:6%;top:50%;transform:translateY(-50%);
+  display:flex;flex-direction:column;gap:0.9rem;
+  z-index:2;
+}
+.hchip{
+  background:var(--d2);border:1px solid var(--border);
+  border-radius:2rem;padding:0.6rem 1.2rem;
+  font-size:0.78rem;font-weight:600;white-space:nowrap;
+  box-shadow:0 8px 32px rgba(0,0,0,0.4);
+  display:flex;align-items:center;gap:0.5rem;
+}
+.hc1{color:var(--pink);border-color:rgba(255,45,120,0.2);animation:chipf1 4s ease-in-out infinite;}
+.hc2{color:var(--cyan);border-color:rgba(0,212,255,0.2);animation:chipf2 5s ease-in-out infinite;}
+.hc3{color:var(--gold);border-color:rgba(255,190,11,0.2);animation:chipf1 6s ease-in-out infinite;}
+.hc4{color:var(--green);border-color:rgba(6,214,160,0.2);animation:chipf2 4.5s ease-in-out infinite;}
+.hc5{color:var(--purple);border-color:rgba(155,93,229,0.2);animation:chipf1 5.5s ease-in-out infinite;}
+@keyframes chipf1{0%,100%{transform:translateX(0);}50%{transform:translateX(-8px);}}
+@keyframes chipf2{0%,100%{transform:translateX(0);}50%{transform:translateX(8px);}}
+
+/* ═══════════════ TICKER ═══════════════ */
+.ticker{overflow:hidden;padding:0.95rem 0;background:var(--d2);border-top:1px solid var(--border);border-bottom:1px solid var(--border);}
+.ticker-track{display:flex;gap:2.5rem;animation:tick 25s linear infinite;white-space:nowrap;}
+.titem{font-family:'Syne',sans-serif;font-weight:700;font-size:0.8rem;letter-spacing:0.14em;text-transform:uppercase;display:flex;align-items:center;gap:1rem;}
+.titem .dot{width:5px;height:5px;border-radius:50%;}
+.t1 .dot{background:var(--pink);}
+.t2 .dot{background:var(--cyan);}
+.t3 .dot{background:var(--gold);}
+.t4 .dot{background:var(--green);}
+@keyframes tick{from{transform:translateX(0);}to{transform:translateX(-50%)}}
+
+/* ═══════════════ SECTION BASE ═══════════════ */
+.sec{padding:7rem 6%;}
+.sl{font-size:0.7rem;font-weight:700;letter-spacing:0.16em;text-transform:uppercase;display:flex;align-items:center;gap:0.7rem;margin-bottom:1rem;}
+.sl::before{content:'';display:block;width:28px;height:2px;border-radius:2px;}
+.sl-pink{color:var(--pink);}.sl-pink::before{background:var(--pink);}
+.sl-cyan{color:var(--cyan);}.sl-cyan::before{background:var(--cyan);}
+.sl-gold{color:var(--gold);}.sl-gold::before{background:var(--gold);}
+.sl-green{color:var(--green);}.sl-green::before{background:var(--green);}
+.sl-purple{color:var(--purple);}.sl-purple::before{background:var(--purple);}
+.sh{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(2.2rem,3.5vw,3.2rem);line-height:1.05;letter-spacing:-0.03em;color:white;margin-bottom:1rem;}
+.sp{font-size:1rem;color:var(--muted);line-height:1.75;max-width:540px;}
+
+/* ═══════════════ ABOUT ═══════════════ */
+.about-sec{background:var(--d2);}
+.about-wrap{display:grid;grid-template-columns:1fr 1.2fr;gap:5rem;align-items:center;}
+.acard{
+  background:var(--d3);border-radius:28px;padding:3rem;
+  border:1px solid var(--border);position:relative;overflow:hidden;
+}
+.acard::after{content:'';position:absolute;top:-80px;right:-80px;width:260px;height:260px;border-radius:50%;background:radial-gradient(circle,rgba(155,93,229,0.12),transparent 70%);}
+.acard::before{content:'';position:absolute;bottom:-60px;left:-60px;width:180px;height:180px;border-radius:50%;background:radial-gradient(circle,rgba(0,212,255,0.08),transparent 70%);}
+.aavatar{width:76px;height:76px;border-radius:50%;background:var(--g1);display:flex;align-items:center;justify-content:center;font-family:'Syne',sans-serif;font-weight:800;font-size:1.5rem;color:white;margin-bottom:1.5rem;position:relative;z-index:1;box-shadow:0 8px 32px rgba(255,45,120,0.4);}
+.aname{font-family:'Syne',sans-serif;font-weight:800;font-size:1.4rem;color:white;position:relative;z-index:1;margin-bottom:0.2rem;}
+.arole{font-size:0.82rem;color:var(--muted);position:relative;z-index:1;margin-bottom:2rem;}
+.arow{display:flex;align-items:flex-start;gap:1rem;margin-bottom:0.8rem;position:relative;z-index:1;}
+.akey{font-size:0.7rem;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;min-width:90px;padding-top:0.1rem;}
+.aval{font-size:0.87rem;color:rgba(255,255,255,0.6);line-height:1.5;}
+.agreen{display:flex;align-items:center;gap:0.5rem;}
+.adot{width:7px;height:7px;border-radius:50%;background:var(--green);animation:pulseAnim 1.5s infinite;}
+
+.atxt p{font-size:0.98rem;color:var(--muted);line-height:1.85;margin-bottom:1.1rem;}
+.atxt b{color:var(--text);}
+.atxt-btns{display:flex;gap:1rem;flex-wrap:wrap;margin-top:2rem;}
+
+/* ═══════════════ SERVICES ═══════════════ */
+.svc-sec{background:var(--dark);}
+.svc-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--border);border:1px solid var(--border);border-radius:24px;overflow:hidden;margin-top:4.5rem;}
+.scard{background:var(--d2);padding:2.6rem;transition:background 0.3s,transform 0.3s;position:relative;overflow:hidden;cursor:default;}
+.scard:hover{background:var(--d3);}
+.scard::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;opacity:0;transition:opacity 0.3s;}
+.scard:hover::before{opacity:1;}
+.sc1::before{background:var(--g1);}
+.sc2::before{background:var(--g2);}
+.sc3::before{background:var(--g3);}
+.sc4::before{background:var(--g4);}
+.sc5::before{background:var(--g1);}
+.sc6::before{background:var(--g3);}
+.sicon{font-size:2rem;margin-bottom:1.5rem;display:block;}
+.snum{font-family:'Syne',sans-serif;font-weight:800;font-size:2.8rem;color:rgba(255,255,255,0.03);line-height:1;margin-bottom:1rem;}
+.stitle{font-family:'Syne',sans-serif;font-weight:700;font-size:1.08rem;color:white;margin-bottom:0.7rem;}
+.sdesc{font-size:0.86rem;color:var(--muted);line-height:1.7;}
+.stags{display:flex;flex-wrap:wrap;gap:0.4rem;margin-top:1.2rem;}
+.stag{font-size:0.68rem;padding:0.22rem 0.6rem;border-radius:2rem;border:1px solid var(--border);color:var(--muted);}
+
+/* ═══════════════ WORK / SAMPLE CREATIVES ═══════════════ */
+.work-sec{background:var(--d2);}
+.work-cta-box{
+  margin-top:4rem;
+  background:var(--d3);border-radius:28px;border:1px solid var(--border);
+  overflow:hidden;position:relative;
+}
+.wcb-top{
+  background:linear-gradient(135deg,#0d0020 0%,#1a0040 40%,#001a40 70%,#002040 100%);
+  padding:4rem 3rem;display:flex;align-items:center;justify-content:space-between;
+  position:relative;overflow:hidden;gap:2rem;flex-wrap:wrap;
+}
+.wcb-top::before{content:'';position:absolute;top:-100px;right:-100px;width:350px;height:350px;border-radius:50%;background:radial-gradient(circle,rgba(155,93,229,0.2),transparent 70%);}
+.wcb-top::after{content:'';position:absolute;bottom:-80px;left:-80px;width:250px;height:250px;border-radius:50%;background:radial-gradient(circle,rgba(255,45,120,0.15),transparent 70%);}
+.wcb-left{position:relative;z-index:1;}
+.wcb-heading{font-family:'Syne',sans-serif;font-weight:800;font-size:clamp(1.6rem,3vw,2.5rem);color:white;line-height:1.2;margin-bottom:0.8rem;}
+.wcb-sub{font-size:0.95rem;color:rgba(255,255,255,0.5);max-width:420px;line-height:1.7;}
+.wcb-right{position:relative;z-index:1;}
+.wcb-btn{
+  display:inline-flex;align-items:center;gap:0.7rem;
+  background:var(--g1);color:white;
+  padding:1rem 2.5rem;border-radius:3rem;font-size:1rem;font-weight:700;
+  text-decoration:none;box-shadow:0 8px 40px rgba(255,45,120,0.4);
+  transition:all 0.3s;white-space:nowrap;
+}
+.wcb-btn:hover{transform:translateY(-4px) scale(1.03);box-shadow:0 16px 50px rgba(255,45,120,0.55);}
+.wcb-arrow{font-size:1.2rem;transition:transform 0.3s;}
+.wcb-btn:hover .wcb-arrow{transform:translateX(4px);}
+
+.wcb-previews{
+  padding:2.5rem 3rem;
+  display:grid;grid-template-columns:repeat(4,1fr);gap:1rem;
+}
+.wprev{
+  border-radius:14px;overflow:hidden;border:1px solid var(--border);
+  aspect-ratio:1;display:flex;align-items:center;justify-content:center;
+  font-family:'Syne',sans-serif;font-weight:800;font-size:0.9rem;
+  color:rgba(255,255,255,0.7);transition:transform 0.3s,border-color 0.3s;
+  position:relative;
+}
+.wprev:hover{transform:scale(1.04);}
+.wp1{background:linear-gradient(135deg,#1a0533,#ff2d78);}
+.wp2{background:linear-gradient(135deg,#001a40,#00d4ff);}
+.wp3{background:linear-gradient(135deg,#1a1000,#ffbe0b);}
+.wp4{background:linear-gradient(135deg,#001a10,#06d6a0);}
+.wprev .wplabel{font-size:0.72rem;text-align:center;padding:0.5rem;}
+
+/* ═══════════════ AI SECTION ═══════════════ */
+.ai-sec{
+  background:var(--dark);text-align:center;
+  position:relative;overflow:hidden;
+}
+.ai-sec::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 70% 60% at 50% 50%,rgba(155,93,229,0.12) 0%,transparent 70%);pointer-events:none;}
+.ai-badges{display:flex;flex-wrap:wrap;gap:0.9rem;justify-content:center;margin-top:3rem;position:relative;}
+.ab{
+  padding:0.7rem 1.4rem;border-radius:3rem;font-size:0.86rem;font-weight:600;
+  display:flex;align-items:center;gap:0.55rem;cursor:default;
+  transition:transform 0.25s,box-shadow 0.25s;
+}
+.ab:hover{transform:translateY(-3px);}
+.ab .abt{width:6px;height:6px;border-radius:50%;}
+.ab1{background:rgba(255,45,120,0.12);border:1px solid rgba(255,45,120,0.25);color:var(--pink);}
+.ab1 .abt{background:var(--pink);}
+.ab1:hover{box-shadow:0 8px 28px rgba(255,45,120,0.25);}
+.ab2{background:rgba(0,212,255,0.1);border:1px solid rgba(0,212,255,0.22);color:var(--cyan);}
+.ab2 .abt{background:var(--cyan);}
+.ab2:hover{box-shadow:0 8px 28px rgba(0,212,255,0.2);}
+.ab3{background:rgba(255,190,11,0.12);border:1px solid rgba(255,190,11,0.22);color:var(--gold);}
+.ab3 .abt{background:var(--gold);}
+.ab3:hover{box-shadow:0 8px 28px rgba(255,190,11,0.2);}
+.ab4{background:rgba(6,214,160,0.1);border:1px solid rgba(6,214,160,0.22);color:var(--green);}
+.ab4 .abt{background:var(--green);}
+.ab4:hover{box-shadow:0 8px 28px rgba(6,214,160,0.2);}
+.ab5{background:rgba(155,93,229,0.12);border:1px solid rgba(155,93,229,0.25);color:var(--purple);}
+.ab5 .abt{background:var(--purple);}
+.ab5:hover{box-shadow:0 8px 28px rgba(155,93,229,0.2);}
+
+/* ═══════════════ SKILLS ═══════════════ */
+.skills-sec{background:var(--d2);}
+.skgrid{display:grid;grid-template-columns:repeat(4,1fr);gap:1.5rem;margin-top:4.5rem;}
+.skcard{background:var(--d3);border-radius:20px;padding:1.8rem;border:1px solid var(--border);position:relative;overflow:hidden;transition:transform 0.3s;}
+.skcard:hover{transform:translateY(-5px);}
+.skcard::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;}
+.sk1::before{background:var(--g1);}
+.sk2::before{background:var(--g2);}
+.sk3::before{background:var(--g3);}
+.sk4::before{background:var(--g4);}
+.skhead{font-family:'Syne',sans-serif;font-weight:700;font-size:0.78rem;letter-spacing:0.07em;text-transform:uppercase;margin-bottom:1.2rem;padding-bottom:0.8rem;border-bottom:1px solid var(--border);}
+.sk1 .skhead{color:var(--pink);}
+.sk2 .skhead{color:var(--cyan);}
+.sk3 .skhead{color:var(--gold);}
+.sk4 .skhead{color:var(--green);}
+.skitems{display:flex;flex-direction:column;gap:0.6rem;}
+.ski{font-size:0.87rem;color:rgba(255,255,255,0.55);display:flex;align-items:center;gap:0.5rem;}
+.ski::before{content:'›';font-weight:700;font-size:1rem;}
+.sk1 .ski::before{color:var(--pink);}
+.sk2 .ski::before{color:var(--cyan);}
+.sk3 .ski::before{color:var(--gold);}
+.sk4 .ski::before{color:var(--green);}
+
+/* ═══════════════ EXPERIENCE ═══════════════ */
+.exp-sec{background:var(--dark);}
+.exlist{margin-top:4rem;}
+.exitem{
+  display:grid;grid-template-columns:230px 1fr;gap:3.5rem;
+  padding:2.8rem 0;border-bottom:1px solid var(--border);
+}
+.exitem:first-child{border-top:1px solid var(--border);}
+.exdate{font-size:0.82rem;color:var(--muted);}
+.exdatebig{font-family:'Syne',sans-serif;font-weight:700;font-size:0.9rem;color:white;margin-bottom:0.3rem;}
+.extag{display:inline-block;font-size:0.67rem;font-weight:700;padding:0.2rem 0.7rem;border-radius:2rem;letter-spacing:0.07em;text-transform:uppercase;margin-top:0.6rem;}
+.et1{background:rgba(255,45,120,0.12);color:var(--pink);border:1px solid rgba(255,45,120,0.2);}
+.et2{background:rgba(0,212,255,0.1);color:var(--cyan);border:1px solid rgba(0,212,255,0.18);}
+.exright{}
+.exrole{font-family:'Syne',sans-serif;font-weight:800;font-size:1.2rem;color:white;margin-bottom:0.3rem;}
+.exco{font-size:0.88rem;font-weight:600;margin-bottom:0.25rem;}
+.exco1{color:var(--pink);}
+.exco2{color:var(--cyan);}
+.exmeta{font-size:0.78rem;color:var(--muted);margin-bottom:1rem;}
+.expts{list-style:none;display:flex;flex-direction:column;gap:0.5rem;}
+.expts li{font-size:0.89rem;color:var(--muted);padding-left:1.3rem;position:relative;line-height:1.65;}
+.expts li::before{content:'▸';position:absolute;left:0;font-size:0.68rem;top:0.32rem;}
+.ep1 li::before{color:var(--pink);}
+.ep2 li::before{color:var(--cyan);}
+
+/* ═══════════════ CONTACT ═══════════════ */
+.contact-sec{
+  background:var(--d2);text-align:center;
+  position:relative;overflow:hidden;padding:8rem 6%;
+}
+.contact-sec::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 50% at 50% 50%,rgba(255,45,120,0.07) 0%,transparent 70%);pointer-events:none;}
+.ctitle{
+  font-family:'Syne',sans-serif;font-weight:800;
+  font-size:clamp(2.5rem,5.5vw,5rem);
+  color:white;line-height:1.0;letter-spacing:-0.04em;
+  margin:1.5rem 0 2.5rem;position:relative;
+}
+.ctitle span{background:var(--g1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+.cchips{display:flex;justify-content:center;gap:1rem;flex-wrap:wrap;position:relative;}
+.cchip{padding:0.8rem 1.8rem;border-radius:3rem;font-size:0.88rem;font-weight:600;text-decoration:none;display:flex;align-items:center;gap:0.5rem;transition:all 0.25s;}
+.cc1{background:rgba(255,45,120,0.12);border:1px solid rgba(255,45,120,0.25);color:var(--pink);}
+.cc1:hover{background:rgba(255,45,120,0.2);transform:translateY(-3px);}
+.cc2{background:rgba(0,212,255,0.1);border:1px solid rgba(0,212,255,0.22);color:var(--cyan);}
+.cc2:hover{background:rgba(0,212,255,0.18);transform:translateY(-3px);}
+.cc3{background:rgba(6,214,160,0.1);border:1px solid rgba(6,214,160,0.22);color:var(--green);}
+.cc3:hover{background:rgba(6,214,160,0.18);transform:translateY(-3px);}
+.cc4{background:rgba(155,93,229,0.12);border:1px solid rgba(155,93,229,0.25);color:var(--purple);}
+.cc4:hover{background:rgba(155,93,229,0.2);transform:translateY(-3px);}
+.cavail{font-size:0.85rem;color:var(--muted);margin-bottom:2.5rem;position:relative;}
+
+footer{background:var(--dark);text-align:center;padding:2rem;font-size:0.76rem;color:var(--muted);border-top:1px solid var(--border);}
+footer b{background:var(--g1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;}
+
+/* FADE IN */
+.fi{opacity:0;transform:translateY(24px);transition:opacity 0.65s ease,transform 0.65s ease;}
+.fi.v{opacity:1;transform:translateY(0);}
+.fd1{transition-delay:0.1s;}.fd2{transition-delay:0.2s;}.fd3{transition-delay:0.3s;}
+
+@media(max-width:960px){
+  .hero{grid-template-columns:1fr;}
+  .hero-chips{display:none;}
+  .about-wrap{grid-template-columns:1fr;gap:2.5rem;}
+  .svc-grid{grid-template-columns:1fr 1fr;}
+  .wcb-previews{grid-template-columns:repeat(2,1fr);}
+  .skgrid{grid-template-columns:1fr 1fr;}
+  .exitem{grid-template-columns:1fr;gap:0.8rem;}
+  .nlinks{display:none;}
+}
+@media(max-width:600px){
+  .svc-grid{grid-template-columns:1fr;}
+  .skgrid{grid-template-columns:1fr 1fr;}
+  .wcb-top{padding:2.5rem 1.8rem;}
+  .wcb-previews{padding:1.5rem 1.8rem;grid-template-columns:repeat(2,1fr);}
+  .sec{padding:5rem 5%;}
+}
+</style>
+</head>
+<body>
+
+<div id="dot"></div>
+<div id="ring"></div>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nlogo">Sivagopi Chintakayala</a>
+  <ul class="nlinks">
+    <li><a href="#about-me">About</a></li>
+    <li><a href="#services">Services</a></li>
+    <li><a href="https://sivagopiportpolio.my.canva.site/sivagopi" target="_blank">Work</a></li>
+    <li><a href="#skills">Skills</a></li>
+    <li><a href="#contact" class="ncta">Hire Me</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<section class="hero" id="home">
+  <div class="orb orb1"></div>
+  <div class="orb orb2"></div>
+  <div class="orb orb3"></div>
+
+  <div class="hero-inner fi">
+    <div class="hero-eyebrow"><span class="pulse"></span>Available for Work — Immediate Joining</div>
+    <h1 class="hero-h1">
+      I Design.<br>
+      <span class="line-grad">I Build.</span>
+      <span class="line-grad2">I Deliver.</span>
+    </h1>
+    <p class="hero-p">Hi, I'm <b>Sivagopi</b> — a Graphic Designer from Hyderabad who blends sharp visual craft with <b>AI-powered workflows</b> to create brands, websites, and experiences that get noticed.</p>
+    <div class="hero-ctas">
+      <a href="#contact" class="btn-g">Contact Me →</a>
+      <a href="#services" class="btn-o">My Services</a>
+    </div>
+    <div class="hero-stats">
+      <div><div class="hstat-n">75+</div><div class="hstat-l">Projects</div></div>
+      <div><div class="hstat-n">1+</div><div class="hstat-l">Yr Experience</div></div>
+      <div><div class="hstat-n">10+</div><div class="hstat-l">Tools</div></div>
+    </div>
+  </div>
+
+  <div class="hero-chips fi fd2">
+    <div class="hchip hc1">🎨 Brand Identity</div>
+    <div class="hchip hc2">🌐 Web & Landing Pages</div>
+    <div class="hchip hc3">✦ AI-Powered Design</div>
+    <div class="hchip hc4">📱 Social Media</div>
+    <div class="hchip hc5">⚡ HTML & CSS</div>
+  </div>
+</section>
+
+<!-- TICKER -->
+<div class="ticker">
+  <div class="ticker-track">
+    <span class="titem t1"><span class="dot"></span>Graphic Design</span>
+    <span class="titem t2"><span class="dot"></span>Brand Identity</span>
+    <span class="titem t3"><span class="dot"></span>Landing Pages</span>
+    <span class="titem t4"><span class="dot"></span>HTML & CSS</span>
+    <span class="titem t1"><span class="dot"></span>Social Media Design</span>
+    <span class="titem t2"><span class="dot"></span>AI Workflows</span>
+    <span class="titem t3"><span class="dot"></span>UI/UX Visual Design</span>
+    <span class="titem t4"><span class="dot"></span>Ad Creatives</span>
+    <span class="titem t1"><span class="dot"></span>Figma Expert</span>
+    <span class="titem t2"><span class="dot"></span>Adobe Creative Suite</span>
+    <span class="titem t3"><span class="dot"></span>Pitch Decks</span>
+    <span class="titem t4"><span class="dot"></span>Midjourney</span>
+    <span class="titem t1"><span class="dot"></span>Graphic Design</span>
+    <span class="titem t2"><span class="dot"></span>Brand Identity</span>
+    <span class="titem t3"><span class="dot"></span>Landing Pages</span>
+    <span class="titem t4"><span class="dot"></span>HTML & CSS</span>
+    <span class="titem t1"><span class="dot"></span>Social Media Design</span>
+    <span class="titem t2"><span class="dot"></span>AI Workflows</span>
+    <span class="titem t3"><span class="dot"></span>UI/UX Visual Design</span>
+    <span class="titem t4"><span class="dot"></span>Ad Creatives</span>
+    <span class="titem t1"><span class="dot"></span>Figma Expert</span>
+    <span class="titem t2"><span class="dot"></span>Adobe Creative Suite</span>
+    <span class="titem t3"><span class="dot"></span>Pitch Decks</span>
+    <span class="titem t4"><span class="dot"></span>Midjourney</span>
+  </div>
+</div>
+
+<!-- ABOUT -->
+<section class="about-sec sec" id="about-me">
+  <div class="about-wrap fi">
+    <div>
+      <div class="acard">
+        <div class="aavatar">SG</div>
+        <div class="aname">Sivagopi Chintakayala</div>
+        <div class="arole">Graphic Designer · AI Creative · Web Builder</div>
+        <div class="arow"><span class="akey" style="color:var(--pink);">Experience</span><span class="aval">1+ Year · Zithara Technologies</span></div>
+        <div class="arow"><span class="akey" style="color:var(--cyan);">Education</span><span class="aval">B.Tech ECE · NIT Narasaraopeta</span></div>
+        <div class="arow"><span class="akey" style="color:var(--gold);">Location</span><span class="aval">Hyderabad, Telangana</span></div>
+        <div class="arow"><span class="akey" style="color:var(--green);">Open To</span><span class="aval">Full-Time · Freelance · Remote · Relocation</span></div>
+        <div class="arow"><span class="akey" style="color:var(--purple);">Joining</span><span class="aval"><span class="agreen"><span class="adot"></span>Immediate</span></span></div>
+      </div>
+    </div>
+    <div class="atxt">
+      <div class="sl sl-pink">About Me</div>
+      <h2 class="sh">Hi, I'm Sivagopi —<br>I Make Brands <span style="background:var(--g1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">Look Great.</span></h2>
+      <p>I'm a Graphic Designer from Hyderabad with a passion for creating visuals that don't just look beautiful — they <b>work</b>. With 1+ year of experience at <b>Zithara Technologies</b>, an AI CRM SaaS company, I've designed brand identities, social media creatives, and full landing pages.</p>
+      <p>What sets me apart — I use <b>AI tools like Midjourney, Adobe Firefly, ChatGPT, and Gemini</b> as core engines in my daily workflow. Faster output, smarter ideation, better results.</p>
+      <p>I also <b>build websites and landing pages</b> using HTML, CSS, and AI-powered platforms — end to end, independently. My B.Tech in ECE lets me communicate fluently with dev and product teams.</p>
+      <div class="atxt-btns">
+        <a href="#contact" class="btn-g">Contact Me →</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- SERVICES -->
+<section class="svc-sec sec" id="services">
+  <div class="fi">
+    <div class="sl sl-cyan">What I Do</div>
+    <h2 class="sh">Services Built<br>to Grow Your Brand</h2>
+    <p class="sp">Every service powered by sharp design skills and the best creative tools available.</p>
+  </div>
+  <div class="svc-grid fi fd1">
+    <div class="scard sc1"><div class="snum">01</div><span class="sicon">🎨</span><div class="stitle">Brand Identity Design</div><div class="sdesc">Logos, color systems, typography, and brand guidelines that make your business instantly recognizable.</div><div class="stags"><span class="stag">Illustrator</span><span class="stag">Photoshop</span><span class="stag">Figma</span></div></div>
+    <div class="scard sc2"><div class="snum">02</div><span class="sicon">📱</span><div class="stitle">Social Media Design</div><div class="sdesc">Scroll-stopping creatives for Instagram, LinkedIn, Facebook — on-brand and built to drive engagement.</div><div class="stags"><span class="stag">Photoshop</span><span class="stag">Canva</span><span class="stag">Illustrator</span></div></div>
+    <div class="scard sc3"><div class="snum">03</div><span class="sicon">🌐</span><div class="stitle">Web & Landing Pages</div><div class="sdesc">High-converting pages built with HTML, CSS, and AI platforms — clean, fast, and fully responsive.</div><div class="stags"><span class="stag">HTML</span><span class="stag">CSS</span><span class="stag">Framer AI</span><span class="stag">Webflow</span></div></div>
+    <div class="scard sc4"><div class="snum">04</div><span class="sicon">✦</span><div class="stitle">UI/UX Visual Design</div><div class="sdesc">Clean UI designs and wireframes built with strong hierarchy, grid systems, and UX principles in Figma.</div><div class="stags"><span class="stag">Figma</span><span class="stag">Adobe XD</span></div></div>
+    <div class="scard sc5"><div class="snum">05</div><span class="sicon">📢</span><div class="stitle">Ad Creatives & Marketing</div><div class="sdesc">Performance-ready ad creatives for Meta and Google — designed to click, convert, and stand out.</div><div class="stags"><span class="stag">Photoshop</span><span class="stag">Illustrator</span><span class="stag">Canva</span></div></div>
+    <div class="scard sc6"><div class="snum">06</div><span class="sicon">📊</span><div class="stitle">Pitch Decks & Presentations</div><div class="sdesc">Visually compelling decks that tell your story and impress investors and stakeholders at first glance.</div><div class="stags"><span class="stag">Figma</span><span class="stag">Canva</span><span class="stag">Google Slides</span></div></div>
+  </div>
+</section>
+
+<!-- WORK / SAMPLE CREATIVES -->
+<section class="work-sec sec" id="work">
+  <div class="fi">
+    <div class="sl sl-gold">My Work</div>
+    <h2 class="sh">See My Creatives</h2>
+    <p class="sp">Real projects, real brands — click below to explore all my design work.</p>
+  </div>
+
+  <div class="work-cta-box fi fd1">
+    <div class="wcb-top">
+      <div class="wcb-left">
+        <div class="wcb-heading">Explore My Sample<br>Creatives & Portfolio</div>
+        <div class="wcb-sub">Browse my full collection of brand designs, social media creatives, landing pages, ad campaigns, and more — all in one place.</div>
+      </div>
+      <div class="wcb-right">
+        <a href="https://sivagopiportpolio.my.canva.site/sivagopi" target="_blank" class="wcb-btn">
+          🎨 Open Sample Creatives <span class="wcb-arrow">→</span>
+        </a>
+      </div>
+    </div>
+    <div class="wcb-previews">
+      <div class="wprev wp1"><div class="wplabel">Brand Identity</div></div>
+      <div class="wprev wp2"><div class="wplabel">Social Media</div></div>
+      <div class="wprev wp3"><div class="wplabel">Landing Pages</div></div>
+      <div class="wprev wp4"><div class="wplabel">Ad Creatives</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- AI TOOLS -->
+<section class="ai-sec sec" id="ai">
+  <div class="fi" style="position:relative;">
+    <div class="sl sl-purple" style="justify-content:center;">AI-Powered</div>
+    <h2 class="sh" style="text-align:center;margin:0 auto 1rem;">Designing Smarter with<br><span style="background:var(--g1);-webkit-background-clip:text;-webkit-text-fill-color:transparent;">AI Every Day</span></h2>
+    <p class="sp" style="text-align:center;margin:0 auto;">I use AI tools as core engines — not side experiments.</p>
+  </div>
+  <div class="ai-badges fi fd1">
+    <span class="ab ab1"><span class="abt"></span>Midjourney</span>
+    <span class="ab ab2"><span class="abt"></span>Adobe Firefly</span>
+    <span class="ab ab3"><span class="abt"></span>ChatGPT GPT-4o</span>
+    <span class="ab ab4"><span class="abt"></span>Google Gemini</span>
+    <span class="ab ab5"><span class="abt"></span>Stable Diffusion</span>
+    <span class="ab ab1"><span class="abt"></span>Framer AI</span>
+    <span class="ab ab2"><span class="abt"></span>Gamma</span>
+    <span class="ab ab3"><span class="abt"></span>Relume</span>
+    <span class="ab ab4"><span class="abt"></span>Prompt Engineering</span>
+    <span class="ab ab5"><span class="abt"></span>AI Workflow Automation</span>
+  </div>
+</section>
+
+<!-- SKILLS -->
+<section class="skills-sec sec" id="skills">
+  <div class="fi">
+    <div class="sl sl-green">Toolkit</div>
+    <h2 class="sh">Skills & Tools</h2>
+    <p class="sp">Every tool I use, I use professionally — not just for show.</p>
+  </div>
+  <div class="skgrid fi fd1">
+    <div class="skcard sk1">
+      <div class="skhead">Design Software</div>
+      <div class="skitems">
+        <span class="ski">Adobe Photoshop</span>
+        <span class="ski">Adobe Illustrator</span>
+        <span class="ski">Adobe Premiere Pro</span>
+        <span class="ski">Figma</span>
+        <span class="ski">Canva</span>
+        <span class="ski">Adobe XD</span>
+      </div>
+    </div>
+    <div class="skcard sk2">
+      <div class="skhead">Web & Code</div>
+      <div class="skitems">
+        <span class="ski">HTML</span>
+        <span class="ski">CSS</span>
+        <span class="ski">Framer AI</span>
+        <span class="ski">Webflow</span>
+        <span class="ski">Relume</span>
+        <span class="ski">Gamma</span>
+      </div>
+    </div>
+    <div class="skcard sk3">
+      <div class="skhead">AI Tools</div>
+      <div class="skitems">
+        <span class="ski">Midjourney</span>
+        <span class="ski">Adobe Firefly</span>
+        <span class="ski">ChatGPT GPT-4o</span>
+        <span class="ski">Google Gemini</span>
+        <span class="ski">Stable Diffusion</span>
+        <span class="ski">Prompt Engineering</span>
+      </div>
+    </div>
+    <div class="skcard sk4">
+      <div class="skhead">Design Skills</div>
+      <div class="skitems">
+        <span class="ski">Brand Identity</span>
+        <span class="ski">UI/UX Visual Design</span>
+        <span class="ski">Social Media Design</span>
+        <span class="ski">Ad Creatives</span>
+        <span class="ski">Typography</span>
+        <span class="ski">Color Theory</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- EXPERIENCE -->
+<section class="exp-sec sec" id="experience">
+  <div class="fi">
+    <div class="sl sl-pink">Experience</div>
+    <h2 class="sh">Where I've Done<br>the Work</h2>
+  </div>
+  <div class="exlist fi fd1">
+    <div class="exitem">
+      <div>
+        <div class="exdatebig">Jan 2025 – Feb 2026</div>
+        <div class="exdate">Hyderabad, Telangana</div>
+        <span class="extag et1">Full-Time</span>
+      </div>
+      <div class="exright">
+        <div class="exrole">Graphic Designer</div>
+        <div class="exco exco1">Zithara Technologies Pvt Ltd</div>
+        <div class="exmeta">AI & CRM SaaS Product Company</div>
+        <ul class="expts ep1">
+          <li>Designed 50+ marketing assets — social media, brochures, email banners, pitch decks for B2B retail clients</li>
+          <li>Built websites and landing pages using HTML, CSS, Framer AI, and Gamma — end to end, independently</li>
+          <li>Cut ideation time by 40–50% integrating Midjourney, Firefly, and ChatGPT into daily workflows</li>
+          <li>Maintained the complete brand identity system across all digital and print touchpoints</li>
+          <li>Designed Meta and Google ad creatives in collaboration with the marketing team</li>
+        </ul>
+      </div>
+    </div>
+    <div class="exitem">
+      <div>
+        <div class="exdatebig">Jul – Dec 2024</div>
+        <div class="exdate">Hyderabad, Telangana</div>
+        <span class="extag et2">Training · 6 Months</span>
+      </div>
+      <div class="exright">
+        <div class="exrole">Graphic Design Trainee</div>
+        <div class="exco exco2">Tutorac Academy</div>
+        <div class="exmeta">Industry-Focused Design Program</div>
+        <ul class="expts ep2">
+          <li>Delivered 25+ projects across social media, posters, ad banners, and UI screens</li>
+          <li>Built Figma wireframes and UI layouts using grid systems and UI/UX best practices</li>
+          <li>Introduced AI tools — Midjourney and Firefly — to boost speed and output quality</li>
+          <li>Trained across Photoshop, Illustrator, Premiere Pro, and Figma through live client briefs</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="contact-sec" id="contact">
+  <div class="fi" style="position:relative;">
+    <div class="sl sl-pink" style="justify-content:center;">Get In Touch</div>
+    <div class="ctitle">
+      Let's Build<br>
+      Something <span>Great</span>
+    </div>
+    <p class="cavail">Open to Full-Time · Freelance · Remote · Open to Relocation</p>
+    <div class="cchips">
+      <a href="mailto:sivagopichintakayala29@gmail.com" class="cchip cc1">✉ Email Me</a>
+      <a href="tel:+918008636673" class="cchip cc2">📞 +91 8008636673</a>
+      <a href="https://sivagopiportpolio.my.canva.site/sivagopi" target="_blank" class="cchip cc3">🎨 Sample Creatives</a>
+      <a href="https://linkedin.com/in/sivagopi" target="_blank" class="cchip cc4">LinkedIn</a>
+    </div>
+  </div>
+</section>
+
+<footer>Designed & Built by <b>Sivagopi Chintakayala</b> · Hyderabad · 2025</footer>
+
+<script>
+// Cursor
+const dot=document.getElementById('dot'),ring=document.getElementById('ring');
+let mx=0,my=0,rx=0,ry=0;
+document.addEventListener('mousemove',e=>{
+  mx=e.clientX;my=e.clientY;
+  dot.style.transform=`translate(${mx-4}px,${my-4}px)`;
+});
+(function a(){
+  rx+=(mx-rx)*0.09;ry+=(my-ry)*0.09;
+  ring.style.transform=`translate(${rx-16}px,${ry-16}px)`;
+  requestAnimationFrame(a);
+})();
+
+// Fade in observer
+const obs=new IntersectionObserver(e=>e.forEach(el=>{if(el.isIntersecting)el.target.classList.add('v');}),{threshold:0.08});
+document.querySelectorAll('.fi').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>
