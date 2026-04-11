@@ -1,0 +1,239 @@
+
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+
+  .banner-wrap {
+    width: 100%;
+    background: #111;
+    border-radius: 16px;
+    overflow: hidden;
+    position: relative;
+    min-height: 360px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+  }
+
+  .bg-anim {
+    position: absolute;
+    inset: 0;
+    background: radial-gradient(ellipse at 60% 50%, #e63900 0%, #111 65%);
+    animation: bgPulse 4s ease-in-out infinite alternate;
+    z-index: 0;
+  }
+  @keyframes bgPulse {
+    from { opacity: 0.5; transform: scale(1); }
+    to   { opacity: 1;   transform: scale(1.05); }
+  }
+
+  .grid-lines {
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+    opacity: 0.07;
+    background-image:
+      linear-gradient(to right, #fff 1px, transparent 1px),
+      linear-gradient(to bottom, #fff 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+
+  .shoe-container {
+    position: relative;
+    z-index: 3;
+    animation: floatShoe 3s ease-in-out infinite;
+  }
+  @keyframes floatShoe {
+    0%,100% { transform: translateY(0px) rotate(-6deg); }
+    50%      { transform: translateY(-18px) rotate(-4deg); }
+  }
+
+  .shoe-svg { width: min(340px, 85vw); height: auto; }
+
+  .shadow-ellipse {
+    position: relative;
+    z-index: 2;
+    width: min(200px, 60vw);
+    height: 18px;
+    background: rgba(0,0,0,0.55);
+    border-radius: 50%;
+    filter: blur(8px);
+    margin-top: -10px;
+    animation: shadowPulse 3s ease-in-out infinite;
+  }
+  @keyframes shadowPulse {
+    0%,100% { transform: scaleX(1);   opacity: 0.55; }
+    50%      { transform: scaleX(0.7); opacity: 0.3;  }
+  }
+
+  .content {
+    position: relative;
+    z-index: 4;
+    text-align: center;
+    padding: 28px 24px 32px;
+  }
+
+  .tagline {
+    font-family: Arial Black, Arial, sans-serif;
+    font-size: clamp(32px, 7vw, 64px);
+    font-weight: 900;
+    color: #fff;
+    letter-spacing: -2px;
+    text-transform: uppercase;
+    line-height: 1;
+    animation: slideUp 0.8s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+  @keyframes slideUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  .sub {
+    font-family: Arial, sans-serif;
+    font-size: clamp(12px, 2.5vw, 16px);
+    color: #ccc;
+    letter-spacing: 4px;
+    text-transform: uppercase;
+    margin-top: 8px;
+    animation: slideUp 0.8s 0.2s cubic-bezier(0.22, 1, 0.36, 1) both;
+  }
+
+  .cta-btn {
+    display: inline-block;
+    margin-top: 22px;
+    padding: 12px 36px;
+    background: #fff;
+    color: #111;
+    font-family: Arial Black, Arial, sans-serif;
+    font-size: 14px;
+    font-weight: 900;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-decoration: none;
+    border-radius: 40px;
+    border: none;
+    cursor: pointer;
+    animation: slideUp 0.8s 0.4s cubic-bezier(0.22, 1, 0.36, 1) both;
+    transition: background 0.2s, color 0.2s, transform 0.15s;
+  }
+  .cta-btn:hover { background: #e63900; color: #fff; transform: scale(1.05); }
+
+  .swoosh-ring {
+    position: absolute;
+    z-index: 2;
+    border-radius: 50%;
+    border: 1.5px solid rgba(230,57,0,0.35);
+    animation: ripple 3.5s ease-out infinite;
+    pointer-events: none;
+  }
+  .swoosh-ring:nth-child(2) { animation-delay: 1.2s; }
+  .swoosh-ring:nth-child(3) { animation-delay: 2.4s; }
+  @keyframes ripple {
+    0%   { width: 80px; height: 80px; opacity: 0.8; top: calc(50% - 40px); left: calc(50% - 40px); }
+    100% { width: 500px; height: 500px; opacity: 0; top: calc(50% - 250px); left: calc(50% - 250px); }
+  }
+
+  .logo-badge {
+    position: absolute;
+    top: 20px;
+    right: 24px;
+    z-index: 5;
+    font-family: Arial Black, Arial, sans-serif;
+    font-size: clamp(22px, 5vw, 36px);
+    font-weight: 900;
+    color: #fff;
+    letter-spacing: -1px;
+    text-transform: uppercase;
+    animation: fadeIn 1s 0.1s both;
+  }
+
+  .swoosh-icon {
+    position: absolute;
+    top: 18px;
+    left: 24px;
+    z-index: 5;
+    animation: fadeIn 1s both;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; } to { opacity: 1; }
+  }
+
+  .particles {
+    position: absolute; inset: 0; z-index: 2; overflow: hidden; pointer-events: none;
+  }
+  .particle {
+    position: absolute;
+    width: 4px; height: 4px;
+    border-radius: 50%;
+    background: #e63900;
+    opacity: 0;
+    animation: particleFly 5s ease-out infinite;
+  }
+  @keyframes particleFly {
+    0%   { opacity: 0.8; transform: translate(0,0) scale(1); }
+    100% { opacity: 0;   transform: translate(var(--dx), var(--dy)) scale(0.2); }
+  }
+</style>
+
+<div class="banner-wrap" id="banner">
+  <div class="bg-anim"></div>
+  <div class="grid-lines"></div>
+
+  <div class="swoosh-ring"></div>
+  <div class="swoosh-ring"></div>
+  <div class="swoosh-ring"></div>
+
+  <div class="particles" id="particles"></div>
+
+  <div class="swoosh-icon">
+    <svg width="52" height="20" viewBox="0 0 52 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M0 15.5C8 12 35 2 51 1C44 5.5 22 9.5 14 11C8 12.5 5 14.5 0 15.5Z" fill="white"/>
+    </svg>
+  </div>
+
+  <div class="logo-badge">NIKE</div>
+
+  <div class="shoe-container">
+    <svg class="shoe-svg" viewBox="0 0 340 160" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <ellipse cx="170" cy="148" rx="140" ry="8" fill="#000" opacity="0.3"/>
+      <path d="M30 120 Q50 80 100 70 Q140 62 180 65 Q240 68 290 80 Q310 85 315 95 Q318 103 300 108 Q260 115 200 118 Q130 122 80 125 Q50 127 30 120Z" fill="#e0e0e0"/>
+      <path d="M60 118 Q80 110 130 108 Q190 106 250 110 Q280 112 300 108 Q310 104 305 98 Q290 90 240 84 Q190 78 140 78 Q90 78 60 92 Z" fill="#f5f5f5"/>
+      <path d="M100 70 Q130 55 175 52 Q215 50 250 58 Q275 64 290 75 Q240 70 190 68 Q145 66 100 70Z" fill="#cc2200"/>
+      <path d="M175 52 Q200 40 230 42 Q255 44 270 55 Q250 50 220 50 Q195 50 175 52Z" fill="#ff4422"/>
+      <path d="M60 92 Q50 105 50 115 Q55 118 80 120 Q120 122 80 125 Q50 127 30 120 Q25 112 40 100 Z" fill="#d0d0d0"/>
+      <path d="M285 82 Q310 88 315 96 Q312 108 295 110 Q300 103 298 95 Q294 87 285 82Z" fill="#bbb"/>
+      <ellipse cx="105" cy="88" rx="8" ry="5" fill="#aaa" opacity="0.5"/>
+      <ellipse cx="125" cy="84" rx="8" ry="5" fill="#aaa" opacity="0.5"/>
+      <ellipse cx="145" cy="81" rx="8" ry="5" fill="#aaa" opacity="0.5"/>
+      <ellipse cx="165" cy="79" rx="8" ry="5" fill="#aaa" opacity="0.5"/>
+      <path d="M120 68 Q160 58 200 60 Q190 66 155 67 Q135 67 120 68Z" fill="white" opacity="0.4"/>
+      <path d="M80 108 Q150 100 230 104 Q260 106 290 108 Q250 114 180 116 Q110 118 80 108Z" fill="white" opacity="0.15"/>
+    </svg>
+  </div>
+  <div class="shadow-ellipse"></div>
+
+  <div class="content">
+    <div class="tagline">Just Do It.</div>
+    <div class="sub">New Air Max 2025 — Limited Drop</div>
+    <a class="cta-btn" href="https://www.nike.com" target="_blank" rel="noopener">Shop Now</a>
+  </div>
+</div>
+
+<script>
+  const p = document.getElementById('particles');
+  for (let i = 0; i < 18; i++) {
+    const el = document.createElement('div');
+    el.className = 'particle';
+    el.style.left = Math.random() * 100 + '%';
+    el.style.top  = Math.random() * 100 + '%';
+    const angle = Math.random() * Math.PI * 2;
+    const dist = 60 + Math.random() * 120;
+    el.style.setProperty('--dx', Math.cos(angle) * dist + 'px');
+    el.style.setProperty('--dy', Math.sin(angle) * dist + 'px');
+    el.style.animationDelay = Math.random() * 5 + 's';
+    el.style.animationDuration = 3 + Math.random() * 3 + 's';
+    p.appendChild(el);
+  }
+</script>
