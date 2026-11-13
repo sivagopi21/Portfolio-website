@@ -1,0 +1,109 @@
+<!DOCTYPE html>
+<html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta name="robots" content="noindex,nofollow"><title>Works Admin</title>
+<style>
+:root{--ink:#fbf8ff;--mut:#d0c6e2}*{box-sizing:border-box}
+body{margin:0;font-family:Inter,system-ui,sans-serif;background:radial-gradient(900px 600px at 10% -10%,rgba(124,58,237,.3),transparent 60%),radial-gradient(800px 600px at 100% 10%,rgba(176,29,86,.25),transparent 55%),#0a0510;color:var(--ink);min-height:100vh;padding:32px 16px}
+main{max-width:860px;margin:0 auto}h1{font-size:1.8rem;margin:0 0 6px}.s{color:var(--mut);margin:0 0 22px;line-height:1.6}
+.c{background:linear-gradient(145deg,rgba(255,255,255,.1),rgba(255,255,255,.03));border:1px solid rgba(255,255,255,.14);border-radius:18px;padding:22px;margin-bottom:18px}
+h2{font-size:1.05rem;margin:0 0 14px}label{display:block;font-size:.78rem;color:var(--mut);margin:10px 0 5px}
+input,select,textarea{width:100%;font:inherit;color:#fff;background:rgba(10,5,16,.6);border:1px solid rgba(255,255,255,.25);border-radius:10px;padding:11px 12px}option{color:#000}
+input[type=checkbox]{width:auto;margin-right:8px}.g{display:grid;grid-template-columns:1fr 1fr;gap:10px}@media(max-width:600px){.g{grid-template-columns:1fr}}
+button{font:inherit;font-weight:700;background:linear-gradient(180deg,#fff,#efe7f7);color:#2a0a4a;border:0;border-radius:100px;padding:10px 22px;cursor:pointer;margin:12px 8px 0 0}button:disabled{opacity:.5}button.d{background:#8a1540;color:#fff}button.m{padding:7px 16px;margin:6px 6px 0 0;font-size:.8rem}
+.row{display:grid;grid-template-columns:64px 1fr;gap:12px;align-items:start;padding:12px 0;border-top:1px solid rgba(255,255,255,.1)}
+.row img,.ph{width:64px;height:64px;object-fit:cover;border-radius:8px;background:#2a0a4a;display:grid;place-items:center;font-size:.7rem}.row input{margin-bottom:6px}.nm{font-size:.78rem;color:var(--mut);margin-bottom:6px;word-break:break-all}
+.log{white-space:pre-wrap;font-size:.84rem;color:var(--mut);margin-top:14px;line-height:1.6}details{color:var(--mut);font-size:.84rem;line-height:1.6;margin-top:10px}summary{cursor:pointer;color:#fff}
+#dz{border:2px dashed rgba(255,255,255,.35);border-radius:14px;padding:22px;text-align:center;color:var(--mut);margin-top:10px}#dz.on{background:rgba(255,255,255,.08);border-color:#fff}
+</style></head><body><main>
+<h1>Works Admin</h1>
+<p class="s">Upload images, videos and PDFs, edit titles, hide or delete pieces, and refresh your image sitemap. Everything is saved to your GitHub repository, and your site updates after GitHub Pages rebuilds (about a minute).</p>
+
+<section class="c"><h2>1. Connect to GitHub</h2>
+<div class="g"><div><label for="o">Owner</label><input id="o"></div><div><label for="r">Repository</label><input id="r"></div></div>
+<div class="g"><div><label for="b">Branch</label><input id="b"></div><div><label for="u">Site address</label><input id="u" placeholder="https://sivagopichintakayala.com/"></div></div>
+<label for="t">Access token</label><input id="t" type="password" autocomplete="off" placeholder="github_pat_...">
+<label><input type="checkbox" id="rem"> Remember the token until I close this tab</label>
+<details><summary>How to create the token</summary>GitHub, Settings, Developer settings, Personal access tokens, Fine-grained tokens, Generate new token. Choose only this repository and set Contents to "Read and write". The token stays in this browser and is sent only to GitHub. Do not share it, and delete it if you ever lose control of this device.</details></section>
+
+<section class="c"><h2>2. Upload new works</h2>
+<label for="f">Folder</label><select id="f"></select>
+<div id="dz">Drag files here, or choose them below</div>
+<label for="fi">Files</label><input id="fi" type="file" multiple>
+<label><input type="checkbox" id="op" checked> Optimise images (resize to 2000px for a faster site)</label>
+<label><input type="checkbox" id="sm" checked> Refresh the image sitemap afterwards</label>
+<div id="rows"></div><button id="up">Upload</button><div class="log" id="log"></div></section>
+
+<section class="c"><h2>3. Add a YouTube video (best for large videos)</h2>
+<label for="yu">YouTube link</label><input id="yu" placeholder="https://www.youtube.com/watch?v=...">
+<div class="g"><div><label for="yt">Title</label><input id="yt"></div><div><label for="yd">Description</label><input id="yd"></div></div>
+<button id="ya">Add video</button><div class="log" id="log3"></div></section>
+
+<section class="c"><h2>4. Library: edit, hide or delete</h2>
+<label for="lf">Folder</label><select id="lf"></select><button id="ll">Load files</button>
+<p class="s" style="margin:10px 0 0">Files you add to a folder yourself (for example with GitHub's "Upload files") appear here too. Press Save on a row to put it on the site with a title.</p>
+<div id="lib"></div></section>
+
+<section class="c"><h2>5. Image sitemap</h2><p class="s" style="margin:0">Lists every image with its title so search engines can find your work.</p><button id="sm2">Refresh sitemap now</button><div class="log" id="log5"></div></section>
+</main>
+<script>
+const $=i=>document.getElementById(i);
+const FL={postsads:['postsads','Posts & Ads','img'],logos:['logos','Logos & Mockups','img'],brochures:['brochures','Brochures (images or PDF)','img pdf'],carousels:['corosels','Carousels','img'],banners:['banners','Banners & Thumbnails','img'],magazines:['magazines','Magazine Designs (PDF)','pdf'],profiles:['profiles','Company Profiles (PDF)','pdf'],videos:['videos','Videos (MP4, WebM)','vid']};
+const EXT={img:['png','jpg','jpeg','webp'],pdf:['pdf'],vid:['mp4','webm','mov']};
+const okExt=k=>FL[k][2].split(' ').flatMap(t=>EXT[t]);
+['f','lf'].forEach(id=>{$(id).innerHTML=Object.keys(FL).map(k=>'<option value="'+k+'">'+FL[k][1]+'</option>').join('')});
+$('o').value=localStorage.getItem('wo')||'sivagopi21';$('r').value=localStorage.getItem('wr')||'Portfolio-website';$('b').value=localStorage.getItem('wb')||'main';$('u').value=localStorage.getItem('wu')||'https://sivagopichintakayala.com/';$('t').value=sessionStorage.getItem('wt')||'';
+const say=(id,m,reset)=>{const e=$(id);e.textContent=(reset?'':e.textContent)+m+'\n'};
+function keep(){['o','r','b','u'].forEach(i=>localStorage.setItem('w'+i,$(i).value.trim()));if($('rem').checked)sessionStorage.setItem('wt',$('t').value.trim())}
+const br=()=>$('b').value.trim()||'main',base=()=>($('u').value.trim()||'https://sivagopichintakayala.com/').replace(/\/?$/,'/');
+async function gh(p,o={}){return fetch('https://api.github.com/repos/'+$('o').value.trim()+'/'+$('r').value.trim()+p,{...o,headers:{Authorization:'Bearer '+$('t').value.trim(),Accept:'application/vnd.github+json','Content-Type':'application/json'}})}
+const enc=s=>btoa(unescape(encodeURIComponent(s))),dec=s=>decodeURIComponent(escape(atob(s.replace(/\n/g,''))));
+const q=()=>'?ref='+encodeURIComponent(br());
+async function readText(path){const r=await gh('/contents/'+path+q());if(r.status===404)return{sha:null,text:null};if(!r.ok)throw new Error('Cannot read '+path+' ('+r.status+'). Check owner, repository, branch and token.');const j=await r.json();return{sha:j.sha,text:dec(j.content)}}
+async function listDir(dir){const r=await gh('/contents/'+dir+q());if(r.status===404)return[];if(!r.ok)throw new Error('Cannot read '+dir+' ('+r.status+')');return(await r.json()).filter(x=>x.type==='file')}
+async function put(path,content,sha,msg,raw){const body={message:msg,content:raw?content:enc(content),branch:br()};if(sha)body.sha=sha;return gh('/contents/'+path,{method:'PUT',body:JSON.stringify(body)})}
+async function loadMan(){const f=await readText('works.json');let m={};try{m=JSON.parse(f.text||'{}')}catch(e){}m.items=m.items||[];m.info=m.info||{};m.hide=m.hide||[];return{m,sha:f.sha}}
+async function saveMan(mut){for(let i=0;i<3;i++){const{m,sha}=await loadMan();mut(m);const r=await put('works.json',JSON.stringify(m,null,1),sha,'Update works via admin');if(r.ok)return;if(r.status!==409&&r.status!==422)throw new Error('Saving works.json failed ('+r.status+')')}throw new Error('Saving works.json failed, try again')}
+async function nextNum(dir){let m=0;(await listDir(dir)).forEach(x=>{const k=/^(\d+)\./.exec(x.name);if(k)m=Math.max(m,+k[1])});return m+1}
+const b64=b=>new Promise(res=>{const fr=new FileReader();fr.onload=()=>res(String(fr.result).split(',')[1]);fr.readAsDataURL(b)});
+async function optimise(file){if(!$('op').checked||!/^image\/(png|jpeg|webp)$/.test(file.type))return file;try{const bm=await createImageBitmap(file),s=Math.min(1,2000/Math.max(bm.width,bm.height));if(s===1&&file.size<1.5e6)return file;const c=document.createElement('canvas');c.width=Math.round(bm.width*s);c.height=Math.round(bm.height*s);c.getContext('2d').drawImage(bm,0,0,c.width,c.height);const bl=await new Promise(res=>c.toBlob(res,file.type,.88));return bl&&bl.size<file.size?bl:file}catch(e){return file}}
+const esc=s=>String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+async function sitemap(out){const B=base(),{m}=await loadMan(),imgs=[];
+ for(const k of Object.keys(FL)){const dir=FL[k][0];for(const f of await listDir(dir)){const e=f.name.split('.').pop().toLowerCase();if(!EXT.img.includes(e))continue;const p=dir+'/'+f.name;if(m.hide.includes(p))continue;
+  const it=m.items.find(x=>x.f===p),n=/^(\d+)\./.exec(f.name),i2=(m.info[k]||{})[n&&n[1]];imgs.push([p,(it&&it.t)||(i2&&i2[0])||FL[k][1].replace(/ \(.*\)/,'')+(n?' '+n[1]:''),(it&&it.d)||(i2&&i2[1])||''])}}
+ const all=[['postsads/r.jpeg','Sivagopi Chintakayala, graphic designer in Hyderabad',''],['og-cover.jpg','Sivagopi Chintakayala portfolio','']].concat(imgs).slice(0,1000);
+ const xml='<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n<url><loc>'+esc(B)+'</loc><lastmod>'+new Date().toISOString().slice(0,10)+'</lastmod><changefreq>weekly</changefreq><priority>1.0</priority><xhtml:link rel="alternate" hreflang="en-in" href="'+esc(B)+'"/>\n'+all.map(a=>'<image:image><image:loc>'+esc(B+a[0])+'</image:loc><image:title>'+esc(a[1])+'</image:title>'+(a[2]?'<image:caption>'+esc(a[2])+'</image:caption>':'')+'</image:image>').join('\n')+'\n</url>\n</urlset>\n';
+ const cur=await readText('sitemap.xml'),r=await put('sitemap.xml',xml,cur.sha,'Refresh image sitemap via admin');if(!r.ok)throw new Error('Sitemap failed ('+r.status+')');say(out,'Sitemap updated with '+all.length+' images.')}
+let sel=[];
+function accept(){const k=$('f').value;$('fi').accept=okExt(k).map(e=>'.'+e).join(',')}accept();
+function showSel(){$('rows').innerHTML='';sel.forEach((f,i)=>{const d=document.createElement('div');d.className='row';const im=f.type.startsWith('image/');d.innerHTML=(im?'<img alt="">':'<div class="ph">'+(f.type.startsWith('video/')?'VIDEO':'PDF')+'</div>')+'<div><div class="nm">'+esc(f.name)+' ('+(f.size/1048576).toFixed(1)+' MB)</div><input placeholder="Title (optional)" data-t="'+i+'"><input placeholder="Short description (optional)" data-d="'+i+'"></div>';if(im)d.querySelector('img').src=URL.createObjectURL(f);$('rows').appendChild(d)})}
+$('f').onchange=()=>{accept();$('fi').value='';sel=[];$('rows').innerHTML=''};
+$('fi').onchange=e=>{sel=[...e.target.files];showSel()};
+const dz=$('dz');['dragenter','dragover'].forEach(v=>dz.addEventListener(v,e=>{e.preventDefault();dz.classList.add('on')}));['dragleave','drop'].forEach(v=>dz.addEventListener(v,e=>{e.preventDefault();dz.classList.remove('on')}));dz.addEventListener('drop',e=>{sel=[...e.dataTransfer.files];showSel()});
+$('up').onclick=async()=>{if(!sel.length)return alert('Choose files first');keep();say('log','',true);$('up').disabled=true;
+ try{const k=$('f').value,dir=FL[k][0],allowed=okExt(k);let n=await nextNum(dir);const added=[];
+  for(let i=0;i<sel.length;i++){const f=sel[i],ext=(f.name.split('.').pop()||'').toLowerCase();
+   if(!allowed.includes(ext)){say('log','Skipped '+f.name+' (not allowed in this folder)');continue}
+   if(f.size>40*1048576){say('log','Skipped '+f.name+' (over 40 MB). Use a YouTube link for large videos.');continue}
+   const blob=EXT.img.includes(ext)?await optimise(f):f,name=n+'.'+ext;say('log','Uploading '+name+' ...');
+   const r=await put(dir+'/'+name,await b64(blob),null,'Add '+dir+'/'+name+' via admin',true);
+   if(!r.ok)throw new Error(name+' failed ('+r.status+'). '+(r.status===401||r.status===403?'The token needs Contents: Read and write for this repository.':''));
+   added.push({k,f:dir+'/'+name,t:document.querySelector('[data-t="'+i+'"]').value.trim(),d:document.querySelector('[data-d="'+i+'"]').value.trim()});n++}
+  if(added.length){say('log','Saving to works.json ...');await saveMan(m=>{added.forEach(a=>{m.items=m.items.filter(x=>x.f!==a.f);m.hide=m.hide.filter(h=>h!==a.f);m.items.push(a)})});if($('sm').checked&&added.some(a=>/\.(png|jpe?g|webp)$/.test(a.f)))await sitemap('log')}
+  say('log','Done. Your site updates in about a minute.')}catch(e){say('log','Error: '+e.message)}
+ $('up').disabled=false};
+$('ya').onclick=async()=>{const u=$('yu').value.trim();say('log3','',true);if(!/^https?:\/\/(www\.)?(youtube\.com|youtu\.be)\/.+/i.test(u))return say('log3','Paste a full YouTube link.');keep();
+ try{await saveMan(m=>{m.items=m.items.filter(x=>x.f!==u);m.items.push({k:'videos',f:u,t:$('yt').value.trim(),d:$('yd').value.trim()})});say('log3','Added. It shows in the Videos tab after the site rebuilds.')}catch(e){say('log3','Error: '+e.message)}};
+$('ll').onclick=async()=>{keep();const k=$('lf').value,dir=FL[k][0],box=$('lib');box.textContent='Loading ...';
+ try{const[files,{m}]=await Promise.all([listDir(dir),loadMan()]);const ok=okExt(k);box.innerHTML='';
+  files.filter(x=>ok.includes(x.name.split('.').pop().toLowerCase())).sort((a,b)=>a.name.localeCompare(b.name,undefined,{numeric:true})).forEach(x=>{const p=dir+'/'+x.name,it=m.items.find(y=>y.f===p),n=/^(\d+)\./.exec(x.name),i2=(m.info[k]||{})[n&&n[1]]||[],e=x.name.split('.').pop().toLowerCase(),hid=m.hide.includes(p);
+   const d=document.createElement('div');d.className='row';d.dataset.p=p;d.dataset.sha=x.sha;d.dataset.k=k;
+   d.innerHTML=(EXT.img.includes(e)?'<img alt="" loading="lazy" src="'+esc(p)+'">':'<div class="ph">'+(e==='pdf'?'PDF':'VIDEO')+'</div>')+'<div><div class="nm">'+esc(x.name)+(hid?' (hidden)':'')+'</div><input class="lt" placeholder="Title" value="'+esc((it&&it.t)||i2[0]||'')+'"><input class="ld" placeholder="Description" value="'+esc((it&&it.d)||i2[1]||'')+'"><button class="m" data-a="s">Save</button><button class="m" data-a="h">'+(hid?'Unhide':'Hide')+'</button><button class="m d" data-a="x">Delete</button></div>';box.appendChild(d)});
+  m.items.filter(y=>y.k===k&&/^https?:/.test(y.f)).forEach(y=>{const d=document.createElement('div');d.className='row';d.dataset.p=y.f;d.dataset.k=k;d.innerHTML='<div class="ph">YT</div><div><div class="nm">'+esc(y.f)+'</div><input class="lt" value="'+esc(y.t||'')+'"><input class="ld" value="'+esc(y.d||'')+'"><button class="m" data-a="s">Save</button><button class="m d" data-a="r">Remove</button></div>';box.appendChild(d)});
+  if(!box.children.length)box.textContent='No files in this folder yet.'}catch(e){box.textContent='Error: '+e.message}};
+$('lib').addEventListener('click',async e=>{const b=e.target.closest('button[data-a]');if(!b)return;const row=b.closest('.row'),p=row.dataset.p,k=row.dataset.k,a=b.dataset.a,t=row.querySelector('.lt').value.trim(),d=row.querySelector('.ld').value.trim();b.disabled=true;
+ try{if(a==='s')await saveMan(m=>{m.hide=m.hide.filter(h=>h!==p);m.items=m.items.filter(x=>x.f!==p);m.items.push({k,f:p,t,d})});
+  else if(a==='h'){const hid=b.textContent==='Unhide';await saveMan(m=>{m.hide=m.hide.filter(h=>h!==p);if(!hid)m.hide.push(p)});b.textContent=hid?'Hide':'Unhide'}
+  else if(a==='r'){await saveMan(m=>{m.items=m.items.filter(x=>x.f!==p)});row.remove()}
+  else if(a==='x'){if(!confirm('Delete '+p+' permanently?')){b.disabled=false;return}const r=await gh('/contents/'+p,{method:'DELETE',body:JSON.stringify({message:'Delete '+p+' via admin',sha:row.dataset.sha,branch:br()})});if(!r.ok)throw new Error('Delete failed ('+r.status+')');await saveMan(m=>{m.items=m.items.filter(x=>x.f!==p);if(!m.hide.includes(p))m.hide.push(p)});row.remove()}
+  b.textContent=a==='s'?'Saved':b.textContent}catch(err){alert('Error: '+err.message)}b.disabled=false});
+$('sm2').onclick=async()=>{keep();say('log5','',true);try{await sitemap('log5')}catch(e){say('log5','Error: '+e.message)}};
+</script></body></html>
